@@ -12,6 +12,9 @@ const pool = new Pool({
   database: "tasksdb",
   password: "gopikrishna123",
   port: 5432,
+  ssl: {
+    rejectUnauthorized: false,
+  },  
 });
 
 // ✅ Initialize DB properly
