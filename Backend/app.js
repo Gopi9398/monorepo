@@ -8,9 +8,9 @@ app.use(express.json());
 
 const pool = new Pool({
   user: "postgres",
-  host: "host.docker.internal",
+  host: "database-1.cn22q0gk8wbf.ap-south-2.rds.amazonaws.com",
   database: "tasksdb",
-  password: "gopi@123",
+  password: "gopikrishna123",
   port: 5432,
 });
 
