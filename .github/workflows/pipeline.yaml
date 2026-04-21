@@ -25,6 +25,11 @@ jobs:
           cd Backend
           npm install
 
+      - name: Scan dependencies (npm audit)
+        run: |
+          cd Backend
+          npm audit --audit-level=high
+          
       - name: Run Unit & Integration Tests
         run: |
           cd Backend
@@ -112,7 +117,7 @@ jobs:
   notify-slack:
     runs-on: ubuntu-latest
     needs: [test, build, deploy-staging, deploy-production]
-    if: always()
+    if: failure()
 
     steps:
       - name: Send Slack Notification
