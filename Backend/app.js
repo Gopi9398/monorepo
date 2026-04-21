@@ -45,9 +45,20 @@ app.delete("/tasks/:id", async (req, res) => {
   res.send("Task deleted");
 });
 
+
 // ✅ Start server only after DB ready
-initDB().then(() => {
-  app.listen(5000, () => {
-    console.log("Backend running on port 5000");
-  });
-});
+
+module.exports = { app, pool };
+
+if (require.main === module) {
+  initDB()
+    .then(() => {
+      app.listen(5000, () => {
+        console.log("Backend running on port 5000");
+      });
+    })
+    .catch((err) => {
+      console.error("Failed to connect to DB:", err);
+      process.exit(1);
+    });
+}
