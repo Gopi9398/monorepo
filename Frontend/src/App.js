@@ -5,7 +5,7 @@ function App() {
   const [title, setTitle] = useState("");
 
   const fetchTasks = async () => {
-    const res = await fetch("http://my-alb-528728316.ap-south-2.elb.amazonaws.com/tasks");
+    const res = await fetch("/api/tasks");
     const data = await res.json();
     setTasks(data);
   };
@@ -15,7 +15,7 @@ function App() {
   }, []);
 
   const addTask = async () => {
-    await fetch("http://my-alb-528728316.ap-south-2.elb.amazonaws.com/tasks", {
+    await fetch("/api/tasks", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

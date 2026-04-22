@@ -3,14 +3,16 @@ const { Pool } = require("pg");
 const cors = require("cors");
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: "https://dev-ops-assignment-8byte.vercel.app/"
+}));
 app.use(express.json());
 
 const pool = new Pool({
-  user: "postgres",
-  host: "database-1.cn22q0gk8wbf.ap-south-2.rds.amazonaws.com",
-  database: "tasksdb",
-  password: "gopikrishna123",
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
   port: 5432,
   ssl: {
     rejectUnauthorized: false,
@@ -45,6 +47,10 @@ app.delete("/tasks/:id", async (req, res) => {
   res.send("Task deleted");
 });
 
+app.get("/", (req, res) => {
+  res.status(200).send("OK");
+});
+
 
 // ✅ Start server only after DB ready
 
@@ -53,7 +59,7 @@ module.exports = { app, pool };
 if (require.main === module) {
   initDB()
     .then(() => {
-      app.listen(5000, () => {
+      app.listen(5000, "0.0.0.0", () => {
         console.log("Backend running on port 5000");
       });
     })
